@@ -1,74 +1,62 @@
 import { Link } from "react-router-dom";
 
 function StudentDashboard() {
-  const categories = [
-    { id: "html", name: "HTML", desc: "Tags, semantic structure, forms, and attributes." },
-    { id: "css", name: "CSS", desc: "Flexbox, Grid, styling, and responsive layout rules." },
-    { id: "javascript", name: "JavaScript", desc: "Variables, ES6 features, functions, and the DOM." }
+  const storedName = localStorage.getItem("userName") || "DEVELOPER";
+
+  const tracks = [
+    { id: "html", tag: "[ HTML5 ]", desc: "Master semantic markup, forms, and accessibility standards.", btnText: "▶ START QUIZ" },
+    { id: "css", tag: "[ CSS3 ]", desc: "Test your knowledge of Flexbox, Grid, and responsive layout rules.", btnText: "▶ START QUIZ" },
+    { id: "javascript", tag: "[ JAVASCRIPT ]", desc: "Drill ES6+ syntax, asynchronous flow, and DOM manipulation.", btnText: "▶ START QUIZ" },
+    { id: "cpp", tag: "[ C++ ]", desc: "Evaluate your grasp of object-oriented programming and pointers.", btnText: "▶ START QUIZ" },
+    { id: "dbms", tag: "[ DBMS ]", desc: "Test SQL queries, normalization, and relational database concepts.", btnText: "▶ START QUIZ" }
   ];
 
   return (
-    <div style={{ maxWidth: "850px", margin: "40px auto", padding: "0 20px" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "30px" }}>
-        <div>
-          <h1 style={{ margin: 0, fontSize: "28px" }}>Student Dashboard</h1>
-          <p style={{ color: "#4b5563", marginTop: "5px" }}>Pick a category to test your knowledge or revise concepts.</p>
-        </div>
-        <div style={{ display: "flex", gap: "10px" }}>
-          <Link
-            to="/flashcards"
-            style={{ padding: "8px 14px", backgroundColor: "#0284c7", color: "white", textDecoration: "none", borderRadius: "6px", fontSize: "14px", fontWeight: "bold" }}
-          >
-            Study Flashcards
-          </Link>
-          <Link
-            to="/history"
-            style={{ padding: "8px 14px", backgroundColor: "#374151", color: "white", textDecoration: "none", borderRadius: "6px", fontSize: "14px", fontWeight: "bold" }}
-          >
-            Quiz History
-          </Link>
+    <div style={{ maxWidth: "1400px", margin: "40px auto 80px", padding: "0 30px" }}>
+      <div className="term-box" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "15px 25px", fontSize: "14px", marginBottom: "40px", backgroundColor: "rgba(10, 3, 15, 0.9)" }}>
+        <div style={{ display: "flex", gap: "30px", alignItems: "center" }}>
+          <span style={{ fontWeight: "bold", color: "#b026ff" }}>// SECURE CONNECTION ESTABLISHED</span>
+          <span style={{ color: "var(--term-dim)" }}>SESSION: ACTIVE | ROLE: STUDENT</span>
         </div>
       </div>
 
-      <h2 style={{ fontSize: "20px", marginBottom: "15px" }}>Available Quiz Categories</h2>
+      <div style={{ marginBottom: "50px" }}>
+        <h1 style={{ fontSize: "clamp(40px, 6vw, 64px)", letterSpacing: "4px", margin: "0 0 15px 0", fontFamily: "'VT323', monospace", color: "#ffffff", textShadow: "0 0 10px rgba(255,255,255,0.5)", textTransform: "uppercase" }}>
+          WELCOME, {storedName}.EXE
+        </h1>
+        <p style={{ fontSize: "18px", letterSpacing: "2px", color: "#f5d0fe", margin: 0 }}>
+          SYSTEM READY. SELECT A SUBJECT TRACK TO BEGIN...
+        </p>
+      </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "20px" }}>
-        {categories.map((cat) => (
-          <div
-            key={cat.id}
-            style={{
-              border: "1px solid #e5e7eb",
-              borderRadius: "10px",
-              padding: "20px",
-              backgroundColor: "#ffffff",
-              boxShadow: "0 2px 4px rgba(0,0,0,0.04)",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-between"
-            }}
-          >
-            <div>
-              <h3 style={{ margin: "0 0 10px 0", color: "#1f2937" }}>{cat.name}</h3>
-              <p style={{ color: "#6b7280", fontSize: "14px", lineHeight: "1.5" }}>{cat.desc}</p>
-            </div>
-            <Link
-              to={`/quiz/${cat.id}`}
-              style={{
-                display: "block",
-                textAlign: "center",
-                marginTop: "20px",
-                padding: "10px",
-                backgroundColor: "#2563eb",
-                color: "#ffffff",
-                textDecoration: "none",
-                borderRadius: "6px",
-                fontWeight: "bold"
-              }}
-            >
-              Start {cat.name} Quiz
-            </Link>
+      <div style={{ display: "grid", gridTemplateColumns: "2.5fr 1fr", gap: "40px", alignItems: "start" }}>
+        <div className="term-box" style={{ padding: "40px" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", gap: "35px" }}>
+            {tracks.map((track) => (
+              <div key={track.id} style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", padding: "25px", border: "1px dashed var(--term-dim)", backgroundColor: "rgba(10, 3, 15, 0.4)" }}>
+                <div>
+                  <div className="badge-pill" style={{ marginBottom: "25px", borderColor: "#b026ff", color: "#b026ff" }}>{track.tag}</div>
+                  <p style={{ fontSize: "15px", lineHeight: "1.6", margin: 0, minHeight: "75px", color: "#f5d0fe" }}>{track.desc}</p>
+                </div>
+                <Link to={`/quiz/${track.id}`} className="term-btn-outline" style={{ marginTop: "20px" }}>{track.btnText}</Link>
+              </div>
+            ))}
           </div>
-        ))}
+        </div>
+
+        <div style={{ display: "flex", flexDirection: "column", gap: "40px" }}>
+          <div className="term-box" style={{ padding: "35px" }}>
+            <h2 style={{ fontSize: "32px", fontFamily: "'VT323', monospace", letterSpacing: "3px", margin: "0 0 20px 0", color: "#b026ff" }}>STUDY FLASHCARDS</h2>
+            <p style={{ fontSize: "15px", color: "#f5d0fe", lineHeight: "1.6", marginBottom: "30px" }}>Access the revision module. Flip through digital cards to memorize definitions before attempting a quiz.</p>
+            <Link to="/flashcards" className="term-btn-solid" style={{ padding: "15px", fontSize: "16px", letterSpacing: "1px" }}>⚡ OPEN FLASHCARDS</Link>
+          </div>
+          <div className="term-box" style={{ padding: "35px" }}>
+            <div style={{ fontSize: "14px", marginBottom: "15px", color: "var(--term-dim)", letterSpacing: "1px" }}>C:\DEVQUIZ\USER&gt; CHECK_LOGS</div>
+            <h3 style={{ margin: "0 0 20px 0", fontSize: "22px", color: "#ffffff" }}>SESSION HISTORY</h3>
+            <p style={{ fontSize: "14px", color: "#f5d0fe", marginBottom: "25px", lineHeight: "1.5" }}>Review your previous quiz scores and track your performance over time.</p>
+            <Link to="/history" className="term-btn-outline">VIEW SCORE LOGS</Link>
+          </div>
+        </div>
       </div>
     </div>
   );

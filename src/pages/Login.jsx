@@ -1,70 +1,58 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
-  const navigate = useNavigate();
+  const handleLogin = (e) => {
+    e.preventDefault();
+    
+    // TEMPORARY DAY 2 MOCK: We simulate a successful backend login
+    // On Day 3, you will replace this with an axios request to Member 1's Express API
+    localStorage.setItem("userName", "Harshit");
+    
+    // Redirect to the protected dashboard and refresh the Navbar state
+    window.location.href = "/dashboard";
+  };
 
-  const handleSubmit = (e) => {
-  e.preventDefault();
-
-  if (!email || !password) {
-    setMessage("Please enter both email and password.");
-    return;
-  }
-
-  setMessage("Logged in successfully! Redirecting...");
-  setTimeout(() => {
-    navigate("/dashboard");
-  }, 1000);
-};
+  const inputStyle = {
+    width: "100%", backgroundColor: "rgba(10, 3, 15, 0.6)",
+    border: "1px dashed var(--term-dim)", color: "#b026ff",
+    padding: "15px", fontFamily: "'Share Tech Mono', monospace",
+    fontSize: "16px", marginBottom: "25px", outline: "none", boxSizing: "border-box"
+  };
 
   return (
-    <div style={{ maxWidth: "400px", margin: "50px auto", padding: "24px", border: "1px solid #e5e7eb", borderRadius: "8px", boxShadow: "0 4px 6px rgba(0,0,0,0.05)" }}>
-      <h2 style={{ textAlign: "center", marginBottom: "20px" }}>Log In to DevQuiz</h2>
+    <div style={{ maxWidth: "500px", margin: "80px auto", padding: "0 30px" }}>
+      <div style={{ marginBottom: "30px", textAlign: "center" }}>
+        <div style={{ fontSize: "14px", color: "var(--term-dim)", marginBottom: "10px", letterSpacing: "1px" }}>
+          C:\DEVQUIZ&gt; EXECUTE LOGIN.EXE
+        </div>
+        <h1 style={{ margin: 0, fontSize: "42px", fontFamily: "'VT323', monospace", letterSpacing: "4px", color: "#ffffff" }}>
+          SYSTEM AUTHENTICATION
+        </h1>
+      </div>
 
-      {message && (
-        <p style={{ padding: "10px", backgroundColor: "#e0f2fe", color: "#0369a1", borderRadius: "4px", fontSize: "14px" }}>
-          {message}
+      <div className="term-box" style={{ padding: "40px" }}>
+        <form onSubmit={handleLogin}>
+          <label style={{ display: "block", color: "#f5d0fe", marginBottom: "10px", fontSize: "14px" }}>
+            &gt; EMAIL CREDENTIAL
+          </label>
+          <input type="email" style={inputStyle} placeholder="student@devquiz.com" required />
+
+          <label style={{ display: "block", color: "#f5d0fe", marginBottom: "10px", fontSize: "14px" }}>
+            &gt; SECURE PASSKEY
+          </label>
+          <input type="password" style={inputStyle} placeholder="********" required />
+
+          <button type="submit" className="term-btn-solid" style={{ padding: "15px", fontSize: "18px", marginTop: "10px" }}>
+            INITIATE HANDSHAKE
+          </button>
+        </form>
+      </div>
+
+      <div style={{ textAlign: "center", marginTop: "30px" }}>
+        <p style={{ color: "var(--term-dim)", fontSize: "14px" }}>
+          NO ACCESS CLEARANCE? <Link to="/register" style={{ color: "#b026ff", textDecoration: "none", borderBottom: "1px dashed #b026ff" }}>REGISTER HERE</Link>
         </p>
-      )}
-
-      <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
-        <div>
-          <label style={{ display: "block", marginBottom: "5px", fontWeight: "bold", fontSize: "14px" }}>Email Address</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="name@example.com"
-            style={{ width: "100%", padding: "8px", boxSizing: "border-box", borderRadius: "4px", border: "1px solid #d1d5db" }}
-          />
-        </div>
-
-        <div>
-          <label style={{ display: "block", marginBottom: "5px", fontWeight: "bold", fontSize: "14px" }}>Password</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="••••••••"
-            style={{ width: "100%", padding: "8px", boxSizing: "border-box", borderRadius: "4px", border: "1px solid #d1d5db" }}
-          />
-        </div>
-
-        <button
-          type="submit"
-          style={{ padding: "10px", backgroundColor: "#1f2937", color: "#ffffff", border: "none", borderRadius: "4px", fontWeight: "bold", cursor: "pointer", marginTop: "10px" }}
-        >
-          Log In
-        </button>
-      </form>
-
-      <p style={{ textAlign: "center", fontSize: "14px", marginTop: "15px" }}>
-        Don't have an account? <Link to="/register" style={{ color: "#2563eb" }}>Register here</Link>
-      </p>
+      </div>
     </div>
   );
 }
